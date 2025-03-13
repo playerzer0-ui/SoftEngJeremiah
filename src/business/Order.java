@@ -3,10 +3,12 @@ package business;
 public class Order {
     int price;
     int quantity;
+    User user;
 
-    public Order(int price, int quantity) {
+    public Order(User user, int price, int quantity) {
         this.price = price;
         this.quantity = quantity;
+        this.user = user;
     }
 
     public int getPrice() {

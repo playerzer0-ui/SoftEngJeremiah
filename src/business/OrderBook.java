@@ -11,11 +11,11 @@ public class OrderBook {
         sell = new List_ADT();
     }
 
-    public void add(String mode, int qty, int price){
+    public void add(User user, String mode, int qty, int price){
         if(mode.equalsIgnoreCase("B")){
-            buy.add(new Order(price, qty));
+            buy.add(new Order(user, price, qty));
         } else if (mode.equalsIgnoreCase("S")) {
-            sell.add(new Order(price, qty));
+            sell.add(new Order(user, price, qty));
         }
     }
 

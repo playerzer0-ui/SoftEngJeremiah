@@ -84,11 +84,12 @@ public class HashTable_ADT {
     }
 
     public void listGames() {
+        int num = 1;
         System.out.println("Available Games:");
         for (int i = 0; i < SIZE; i++) {
             GameEntry current = table[i];
             while (current != null) {
-                System.out.println("- " + current.gameName);
+                System.out.println((num++) + ". " + current.gameName);
                 current = current.next;
             }
         }
