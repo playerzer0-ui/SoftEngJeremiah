@@ -1,5 +1,6 @@
 import adt.HashTable_ADT;
 import adt.UserList_ADT;
+import business.Order;
 import business.OrderBook;
 import business.User;
 
@@ -12,6 +13,8 @@ public class Main {
     private static final User bob = new User("Bob");
     private static final User charlie = new User("Charlie");
 
+    private static String gameName = "";
+    private static OrderBook book = null;
     private static User user = null;
 
     private static boolean isLogged = false;
@@ -30,6 +33,7 @@ public class Main {
             }
 
             while (isLogged){
+                choice = "";
                 displayGames();
             }
         }
@@ -73,15 +77,75 @@ public class Main {
 
         choice = sc.nextLine();
 
-
-        if(choice.equalsIgnoreCase("99")){
+        book = market.getGame(choice);
+        if(book != null){
+            gameName = choice;
+            gameOrderMenu();
+        }
+        else if(choice.equalsIgnoreCase("99")){
             System.out.println("Logged out");
             isLogged = false;
+        }
+        else{
+            System.out.println("invalid command");
         }
     }
 
     public static void gameOrderMenu(){
+        Order o;
 
+        System.out.println(gameName);
+        System.out.println(book);
+        System.out.println("1. create buy order");
+        System.out.println("2. create sell order");
+        choice = sc.nextLine();
+
+        switch (choice){
+            case "1":
+                o = createOrder();
+                matchOrder("B", o);
+                break;
+
+            case "2":
+                o = createOrder();
+                matchOrder("S", o);
+                break;
+
+            default:
+                System.out.println("invalid command");
+                break;
+        }
+    }
+
+    public static Order createOrder(){
+        int qty;
+        int price;
+
+        System.out.println("insert qty: ");
+        qty = sc.nextInt();
+        System.out.println("insert price");
+        price = sc.nextInt();
+
+        return new Order(user, price, qty);
+    }
+
+    public static void matchOrder(String mode, Order order) {
+        Order found = book.match(mode, order.getPrice());
+
+        if (found != null) {
+            System.out.println("Found order:");
+            System.out.println(found.viewOrder());
+            System.out.println(order.getUser().getUsername() + " has matched an order with " + found.getUser().getUsername());
+
+            boolean reduced = book.reduce(mode, order); // Reduce the new order (not the found one)
+
+            if (reduced) {
+                System.out.println(order.getUser().getUsername() + "'s order processed successfully.");
+            }
+        } else {
+            System.out.println("No matching order found. Adding to book.");
+            book.add(mode, order);
+        }
     }
 
     public static void Initialize(){

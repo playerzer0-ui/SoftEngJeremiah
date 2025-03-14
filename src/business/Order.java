@@ -11,6 +11,10 @@ public class Order {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public int getPrice() {
         return price;
     }
@@ -25,6 +29,26 @@ public class Order {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String viewOrder(){
+        return user.getUsername() + ": " + this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+        return price == order.price && quantity == order.quantity && user.equals(order.user);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = price;
+        result = 31 * result + quantity;
+        result = 31 * result + user.hashCode();
+        return result;
     }
 
     @Override

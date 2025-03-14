@@ -32,6 +32,10 @@ public class List_ADT {
 
     public boolean remove(Order e) {
         int index = -1;
+        if(isEmpty()){
+            return false;
+        }
+
         for (int i = 0; i < count; i++) {
             if (array[i] == e) {
                 index = i;
@@ -46,6 +50,28 @@ public class List_ADT {
         }
         count--;
         return true;
+    }
+
+    public boolean remove(int i) {
+        if(isEmpty()){
+            return false;
+        }
+
+        for(int j = i; j < count - 1; j++){
+            array[j] = array[j + 1];
+        }
+
+        count--;
+        return true;
+    }
+
+    public int indexOf(Order e){
+        for(int i = 0; i < count; i++){
+            if(array[i] == e){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public boolean isEmpty() {
