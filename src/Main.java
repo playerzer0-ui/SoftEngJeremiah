@@ -33,7 +33,6 @@ public class Main {
             }
 
             while (isLogged){
-                choice = "";
                 displayGames();
             }
         }
@@ -89,6 +88,8 @@ public class Main {
         else{
             System.out.println("invalid command");
         }
+
+        choice = null;
     }
 
     public static void gameOrderMenu(){
@@ -123,8 +124,10 @@ public class Main {
 
         System.out.println("insert qty: ");
         qty = sc.nextInt();
+        sc.nextLine();
         System.out.println("insert price");
         price = sc.nextInt();
+        sc.nextLine();
 
         return new Order(user, price, qty);
     }
