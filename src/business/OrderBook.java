@@ -135,4 +135,11 @@ public class OrderBook {
 
         return "-----------------------------------------------";
     }
+    public List_ADT getBuy() {
+        return buy;
+    }
+
+    public List_ADT getSell() {
+        return sell;
+    }
 }

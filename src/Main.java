@@ -149,6 +149,8 @@ public class Main {
             System.out.println("No matching order found. Adding to book.");
             book.add(mode, order);
         }
+        book.getBuy().sort();
+        book.getSell().sort();
     }
 
     public static void Initialize(){
