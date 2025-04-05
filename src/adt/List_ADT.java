@@ -3,7 +3,7 @@ package adt;
 import business.Order;
 
 public class List_ADT {
-    private Order[] array;
+    Order[] array;
     private int count;
 
     public List_ADT() {
@@ -67,7 +67,7 @@ public class List_ADT {
 
     public int indexOf(Order e){
         for(int i = 0; i < count; i++){
-            if(array[i] == e){
+            if(array[i].equals(e)){
                 return i;
             }
         }
