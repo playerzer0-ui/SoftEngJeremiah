@@ -94,5 +94,29 @@ public class HashTable_ADT {
             }
         }
     }
+
+    public boolean contains(String gameName) {
+        int index = hash(gameName);
+        GameEntry current = table[index];
+        while (current != null) {
+            if (current.gameName.equalsIgnoreCase(gameName)) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    public int getSize() {
+        int size = 0;
+        for (int i = 0; i < SIZE; i++) {
+            GameEntry current = table[i];
+            while (current != null) {
+                size++;
+                current = current.next;
+            }
+        }
+        return size;
+    }
 }
 
