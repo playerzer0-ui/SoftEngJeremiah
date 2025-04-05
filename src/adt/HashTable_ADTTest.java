@@ -135,6 +135,9 @@ class HashTable_ADTTest {
         assertTrue(result);
     }
 
+    /**
+     * Test of contains_NotExistentGame, of class HashTable_ADT.
+     */
     @Test
     public void testContains_NotExistentGame() {
         System.out.println("contains_NotExistentGame");
@@ -146,6 +149,9 @@ class HashTable_ADTTest {
         assertFalse(result);
     }
 
+    /**
+     * Test of getSize_EmptyTable, of class HashTable_ADT.
+     */
     @Test
     public void testGetSize_EmptyTable() {
         System.out.println("getSize_EmptyTable");
@@ -155,6 +161,9 @@ class HashTable_ADTTest {
         assertEquals(0, size);
     }
 
+    /**
+     * Test of getSize_SingleGame, of class HashTable_ADT.
+     */
     @Test
     public void testGetSize_SingleGame() {
         System.out.println("getSize_SingleGame");
@@ -165,6 +174,9 @@ class HashTable_ADTTest {
         assertEquals(1, size);
     }
 
+    /**
+     * Test of getSize_MultipleGames, of class HashTable_ADT.
+     */
     @Test
     public void testGetSize_MultipleGames() {
         System.out.println("getSize_MultipleGames");
