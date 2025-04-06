@@ -9,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class List_ADTTest {
 
     User u1 = new User("Ken");
-    Order o1 = new Order(u1,100,5);
+    Order o1 = new Order(u1, 100, 5);
     User u2 = new User("Olive");
-    Order o2 = new Order(u2,110,2);
+    Order o2 = new Order(u2, 110, 2);
     User u3 = new User("Sean");
-    Order o3 = new Order(u3,95,10);
+    Order o3 = new Order(u3, 95, 10);
     User u4 = new User("Amy");
-    Order o4 = new Order(u4,156,4);
+    Order o4 = new Order(u4, 156, 4);
 
     public List_ADTTest() {
     }
@@ -103,7 +103,7 @@ class List_ADTTest {
         instance.add(o2);  // index 1
 
         // Create the order to search for
-        Order orderNotFound =  new Order(u3,200,50);
+        Order orderNotFound = new Order(u3, 200, 50);
 
         int expected = -1;
         int result = instance.indexOf(orderNotFound);
@@ -154,9 +154,9 @@ class List_ADTTest {
         System.out.println("sort_SortOrdersBySamePrice");
         List_ADT instance = new List_ADT();
 
-        instance.add(new Order(u1,100,5));
-        instance.add(new Order(u2,100,8));
-        instance.add(new Order(u3,100,3));
+        instance.add(new Order(u1, 100, 5));
+        instance.add(new Order(u2, 100, 8));
+        instance.add(new Order(u3, 100, 3));
         boolean result = instance.sort();
         assertTrue(result);
 
@@ -179,7 +179,7 @@ class List_ADTTest {
         assertTrue(result);
 
         // Verify that the element is added correctly
-        assertEquals( 1, instance.size());
+        assertEquals(1, instance.size());
         assertEquals(order, instance.get(0));
     }
 
@@ -194,7 +194,7 @@ class List_ADTTest {
         instance.add(o1);
         instance.add(o2);
         instance.add(o3);
-        assertEquals( 3, instance.size());
+        assertEquals(3, instance.size());
 
         // Verify that the elements were added correctly
         assertEquals(o1, instance.get(0));
@@ -217,11 +217,141 @@ class List_ADTTest {
         assertTrue(result);
 
         // Verify the count is reduced by 1
-        assertEquals(2,instance.size());
+        assertEquals(2, instance.size());
 
         // Verify the correct element was removed
         assertEquals(o1, instance.get(0));
         assertEquals(o3, instance.get(1));
+    }
+
+    /**
+     * Test of testRemove_ElementNotFound , of class List_ADT.
+     */
+    @Test
+    public void testRemove_ElementNotFound() {
+        System.out.println("testRemove_ElementNotFound");
+        List_ADT instance = new List_ADT();
+
+        instance.add(o1);
+        instance.add(o2);
+        boolean result = instance.remove(10);
+        assertFalse(result);
+
+        // make sure size has not changed
+        assertEquals(2, instance.size());
+
+        // Verify the correct element was removed
+        assertEquals(o1, instance.get(0));
+        assertEquals(o2, instance.get(1));
+    }
+
+    /**
+     * Test of testRemoveNegativeNum_ElementNotFound , of class List_ADT.
+     */
+    @Test
+    public void testRemoveNegativeNum_ElementNotFound() {
+        System.out.println("testRemoveNegativeNum_ElementNotFound");
+        List_ADT instance = new List_ADT();
+
+        instance.add(o1);
+        instance.add(o2);
+        boolean result = instance.remove(-1);
+        assertFalse(result);
+
+        // make sure size has not changed
+        assertEquals(2, instance.size());
+
+        // Verify element was not  removed
+        assertEquals(o1, instance.get(0));
+        assertEquals(o2, instance.get(1));
+    }
+
+    /**
+     * Test of testRemove2_ElementFound , of class List_ADT.
+     */
+    @Test
+    public void testRemove2_ElementFound() {
+        System.out.println("testRemove2_ElementFound");
+        List_ADT instance = new List_ADT();
+
+        instance.add(o1);
+        instance.add(o2);
+        Order result = instance.remove(o1);
+        assertEquals(o1, result);
+
+        // make sure size has changed
+        assertEquals(1, instance.size());
+
+        // Verify the correct element was removed
+        assertEquals(o2, instance.get(0));
+    }
+
+    /**
+     * Test of remove_ElementRemoved , of class List_ADT.
+     */
+    @Test
+    public void testRemove2_ElementNotFound() {
+        System.out.println("testRemove2_ElementNotFound");
+        List_ADT instance = new List_ADT();
+
+        instance.add(o1);
+        Order result = instance.remove(o2);
+        assertEquals(null, result);
+
+        // make sure size has changed
+        assertEquals(1, instance.size());
+
+        // Verify an element was not removed
+        assertEquals(o1, instance.get(0));
+    }
+
+    /**
+     * Test contains , of class List_ADT.
+     */
+    @Test
+    public void testContains_ElementFound() {
+        System.out.println("testContains_ElementFound");
+        List_ADT instance = new List_ADT();
+
+        instance.add(o1);
+        boolean result = instance.contains(o1);
+        assertTrue(result);
+
+        // make sure it's present
+        assertEquals(1, instance.size());
+
+        // Verify it's there
+        assertEquals(o1, instance.get(0));
+    }
+
+    /**
+     * Test contains , of class List_ADT.
+     */
+    @Test
+    public void testContains_ElementNotFound() {
+        System.out.println("testContains_ElementNotFound");
+        List_ADT instance = new List_ADT();
+        instance.add(o1);
+        boolean result = instance.contains(o2);
+        assertFalse(result);
+
+        // make sure nothing is present
+        assertEquals(null, instance.remove(o2));
+
+    }
+
+    /**
+     * Test get when it throws IndexOutOfBoundsException , of class List_ADT.
+     */
+    @Test
+    public void testGet_WithException() {
+        System.out.println("testGet_WithException");
+        List_ADT instance = new List_ADT();
+        instance.add(o1);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            instance.get(20);
+        });
+
     }
 
 }

@@ -7,13 +7,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserList_ADTTest {
-    public UserList_ADTTest() {
-    }
-
     User u1 = new User("Ken");
     User u2 = new User("Olive");
     User u3 = new User("Sean");
     User u4 = new User("Amy");
+    public UserList_ADTTest() {
+    }
 
     /**
      * Test of get_ValidIndex, of class UserList_ADT.
@@ -38,7 +37,10 @@ class UserList_ADTTest {
     public void testClear() {
         System.out.println("clear");
         UserList_ADT instance = new UserList_ADT();
+        instance.add(u1);
+        assertEquals(1, instance.size());
         instance.clear();
+        assertEquals(0, instance.size());
     }
 
     /**
@@ -54,7 +56,7 @@ class UserList_ADTTest {
         assertTrue(result);
 
         // Verify that the element is added correctly
-        assertEquals( 1, instance.size());
+        assertEquals(1, instance.size());
         assertEquals(user, instance.get(0));
     }
 
@@ -71,7 +73,7 @@ class UserList_ADTTest {
         instance.add(u3);
         instance.add(u4);
 
-        assertEquals( 4, instance.size());
+        assertEquals(4, instance.size());
 
         // Verify that the elements were added correctly
         assertEquals(u1, instance.get(0));
@@ -95,11 +97,32 @@ class UserList_ADTTest {
         assertTrue(result);
 
         // Verify the count is reduced by 1
-        assertEquals(2,instance.size());
+        assertEquals(2, instance.size());
 
         // Verify the correct element was removed
         assertEquals(u2, instance.get(0));
         assertEquals(u3, instance.get(1));
+    }
+
+    /**
+     * Test of testRemove_ElementNotFound , of class UserList_ADT.
+     */
+    @Test
+    public void testRemove_ElementNotFound() {
+        System.out.println("testRemove_ElementNotFound");
+        UserList_ADT instance = new UserList_ADT();
+
+        instance.add(u1);
+        instance.add(u2);
+        boolean result = instance.remove(u3);
+        assertFalse(result);
+
+        // Verify the count is reduced by 1
+        assertEquals(2, instance.size());
+
+        // Verify the correct element was removed
+        assertEquals(u1, instance.get(0));
+        assertEquals(u2, instance.get(1));
     }
 
     /**
@@ -186,4 +209,19 @@ class UserList_ADTTest {
         int result = instance.size();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of testGet_WithException, of class List_ADT, with 3 elements in list.
+     */
+    @Test
+    public void testGet_WithException() {
+        System.out.println("testGet_WithException");
+        UserList_ADT instance = new UserList_ADT();
+
+        instance.add(u1);
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            instance.get(20);
+        });
+    }
+
 }
