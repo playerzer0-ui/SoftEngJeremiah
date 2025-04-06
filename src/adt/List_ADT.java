@@ -30,30 +30,32 @@ public class List_ADT {
         return true;
     }
 
-    public boolean remove(Order e) {
+    public Order remove(Order e) {
         int index = -1;
+        Order temp = null;
         if(isEmpty()){
-            return false;
+            return null;
         }
 
         for (int i = 0; i < count; i++) {
             if (array[i] == e) {
                 index = i;
+                temp = array[i];
                 break;
             }
         }
         if (index == -1) {
-            return false; // Element not found
+            return null; // Element not found
         }
         for (int i = index; i < count - 1; i++) {
             array[i] = array[i + 1];
         }
         count--;
-        return true;
+        return temp;
     }
 
     public boolean remove(int i) {
-        if(isEmpty()){
+        if(isEmpty() || i >= count  || i<0) {
             return false;
         }
 
