@@ -2,32 +2,26 @@ package business;
 
 import adt.List_ADT;
 
-public class OrderBook {
+public class OrderAction {
+    private volatile static OrderAction uniqueInstance;
     private List_ADT buy;
     private List_ADT sell;
-
-    public OrderBook(){
-        buy = new List_ADT();
-        sell = new List_ADT();
+    private OrderAction(List_ADT buy, List_ADT sell) {
+       this.buy = buy;
+       this.sell = sell;
     }
-
-    public void add(User user, String mode, int qty, int price){
-        if(mode.equalsIgnoreCase("B")){
-            buy.add(new Order(user, price, qty));
-        } else {
-            sell.add(new Order(user, price, qty));
+    public static OrderAction getInstance(List_ADT buy, List_ADT sell) {
+        if(uniqueInstance==null){
+            synchronized (OrderAction.class){
+                if(uniqueInstance==null){
+                    uniqueInstance= new OrderAction(buy,sell);
+                }
+            }
         }
+        return uniqueInstance;
     }
 
-    public void add(String mode, Order o){
-        if(mode.equalsIgnoreCase("B")){
-            buy.add(o);
-        } else {
-            sell.add(o);
-        }
-    }
-
-    /*public boolean reduce(String mode, Order o) {
+    public boolean reduce(String mode, Order o) {
         List_ADT bookToCheck;
         boolean isBuying = mode.equalsIgnoreCase("B");
 
@@ -76,7 +70,7 @@ public class OrderBook {
             System.out.println("Remaining quantity of " + remainingQty + " added back to the book.");
             o.setQuantity(remainingQty);
             if(isBuying){
-                buy.add(o);
+              buy.add(o);
             }
             else{
                 sell.add(o);
@@ -84,67 +78,18 @@ public class OrderBook {
         }
 
         return completedOrders > 0;
-    } */
-
-    public Order match(String mode, int price){
-        if(mode.equalsIgnoreCase("B")){
-            for(int i = 0; i < sell.size(); i++){
-                if (price > sell.get(i).getPrice()){
-                    return sell.get(i);
-                }
-            }
-        } else {
-            for(int i = 0; i < buy.size(); i++){
-                if (price < buy.get(i).getPrice()){
-                    return buy.get(i);
-                }
-            }
-        }
-        return null;
     }
 
-    @Override
-    public String toString() {
-        System.out.println("-----------------------------------------------");
-        System.out.println("Buy -- Sell");
-
-        // Find the maximum length between the two arrays
-        int maxLength;
-        if (buy.size() > sell.size()) {
-            maxLength = buy.size();
-        } else {
-            maxLength = sell.size();
-        }
-
-        for (int i = 0; i < maxLength; i++) {
-            String buyValue = "";
-            String sellValue = "";
-
-            // If 'i' is within the buy array length, get the value
-            if (i < buy.size()) {
-                buyValue = String.valueOf(buy.get(i));
-            }
-
-            // If 'i' is within the sell array length, get the value
-            if (i < sell.size()) {
-                sellValue = String.valueOf(sell.get(i));
-            }
-
-            System.out.println(buyValue + " -- " + sellValue);
-        }
-
-        return "-----------------------------------------------";
-    }
     public List_ADT getBuy() {
         return buy;
     }
 
-    public List_ADT getSell() {
-        return sell;
-    }
-
     public void setBuy(List_ADT buy) {
         this.buy = buy;
+    }
+
+    public List_ADT getSell() {
+        return sell;
     }
 
     public void setSell(List_ADT sell) {

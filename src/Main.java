@@ -1,6 +1,7 @@
 import adt.HashTable_ADT;
 import adt.UserList_ADT;
 import business.Order;
+import business.OrderAction;
 import business.OrderBook;
 import business.User;
 
@@ -134,7 +135,20 @@ public class Main {
             System.out.println(found.viewOrder());
             System.out.println(order.getUser().getUsername() + " has matched an order with " + found.getUser().getUsername());
 
-            boolean reduced = book.reduce(mode, order); // Reduce the new order (not the found one)
+           boolean reduced = false;
+           //book.reduce(mode, order);
+            // Reduce the new order (not the found one)
+           OrderAction Oa=null;
+           while(Oa==null) {
+               Oa= OrderAction.getInstance(book.getBuy(), book.getSell());
+               if(Oa!=null) {
+                   reduced=  Oa.reduce(mode, order);
+                   book.setBuy(Oa.getBuy());
+                   book.setSell(Oa.getSell());
+               }
+           }
+           Oa=null;
+
 
             if (reduced) {
                 System.out.println(order.getUser().getUsername() + "'s order processed successfully.");
